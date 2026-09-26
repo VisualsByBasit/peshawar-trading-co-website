@@ -196,7 +196,7 @@ function vehicleCard(v) {
   const icon = ICONS[v.icon] || ICONS.car;
   const msg = `Hello Peshawar Trading Co., I'm interested in the ${v.title} (Ref: ${v.id.toUpperCase()}). Could you share more details and the price?`;
   return `
-    <article class="veh-card" data-category="${v.category}" data-title="${v.title.toLowerCase()}">
+    <article class="veh-card glow-target" data-category="${v.category}" data-title="${v.title.toLowerCase()}">
       <div class="veh-card__media">
         <span class="veh-card__fallback">${icon}</span>
         <img src="${v.img}" alt="${v.title}" loading="lazy" onerror="this.remove()" />
@@ -322,6 +322,48 @@ function initContactForm() {
   });
 }
 
+function initParallax() {
+  const targets = document.querySelectorAll(".hero__bg img, .spotlight__bg img");
+  if (!targets.length) return;
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  let ticking = false;
+  function update() {
+    const y = window.scrollY;
+    targets.forEach((img) => {
+      const rect = img.parentElement.getBoundingClientRect();
+      // Only bother updating while the element is anywhere near the viewport.
+      if (rect.bottom < -200 || rect.top > window.innerHeight + 200) return;
+      const offset = Math.max(-60, Math.min(60, y * 0.12));
+      img.style.setProperty("--parallax-y", `${offset}px`);
+    });
+    ticking = false;
+  }
+  window.addEventListener(
+    "scroll",
+    () => {
+      if (!ticking) {
+        requestAnimationFrame(update);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+  update();
+}
+
+function initCursorGlow() {
+  if (window.matchMedia("(pointer: coarse)").matches) return;
+  document.querySelectorAll(".glow-target").forEach((el) => {
+    el.addEventListener("mousemove", (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = ((e.clientX - rect.left) / rect.width) * 100;
+      const y = ((e.clientY - rect.top) / rect.height) * 100;
+      el.style.setProperty("--mx", `${x}%`);
+      el.style.setProperty("--my", `${y}%`);
+    });
+  });
+}
+
 function setActiveNav() {
   const page = document.body.getAttribute("data-page");
   document.querySelectorAll(".nav__links a").forEach((a) => {
@@ -382,6 +424,8 @@ document.addEventListener("DOMContentLoaded", () => {
   setActiveNav();
   initRevealAnimations();
   initCounters();
+  initParallax();
+  initCursorGlow();
 
   const yearEl = document.querySelector("#current-year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
