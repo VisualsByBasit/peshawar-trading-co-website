@@ -1,50 +1,85 @@
 # Peshawar Trading Co., Ltd. — Website
 
-A static website for Peshawar Trading Co., Ltd., a Japan-based exporter of used cars, trucks, buses, construction machinery, generators and agricultural tractors.
+A Next.js (App Router) website for Peshawar Trading Co., Ltd., a Japan-based exporter of used cars, trucks, buses, construction machinery, generators and agricultural tractors. Built for SEO and conversions: server-rendered pages, per-vehicle detail pages, sitemap.xml, robots.txt, Open Graph/Twitter cards, and JSON-LD structured data (AutoDealer + Vehicle schema).
+
+## Getting started
+
+```bash
+npm install
+npm run dev       # http://localhost:3000
+```
+
+```bash
+npm run build     # production build
+npm run start     # serve the production build
+```
 
 ## Structure
 
-- `index.html` — Home page (hero, categories, featured stock, why-us, CTA)
-- `inventory.html` — Full inventory with category filters and search
-- `about.html` — Company info, services, license details
-- `contact.html` — Contact details, enquiry form, map
-- `assets/css/style.css` — All styling
-- `assets/js/main.js` — Vehicle data + inventory filtering/search + WhatsApp links
-- `assets/js/footer.js` — Shared footer injected on every page
-- `assets/images/` — Logo assets
-
-No build step or framework — plain HTML/CSS/JS. Open `index.html` in a browser, or serve the folder with any static file server.
+```
+app/
+  layout.js              Root layout: fonts, global <head> metadata, Organization JSON-LD
+  page.js                Home page
+  sitemap.js              /sitemap.xml
+  robots.js               /robots.txt
+  manifest.js              /manifest.webmanifest (PWA-style app icon metadata)
+  inventory/page.js       Inventory listing (filters + search)
+  inventory/[slug]/page.js  One page per vehicle (SSG, own metadata + JSON-LD)
+  about/page.js
+  contact/page.js
+  globals.css             All styling (design tokens, layout, components, animations)
+components/               Header, Footer, VehicleCard, ContactForm, InventoryClient,
+                           Reveal / AnimatedGrid (scroll animations), ParallaxImage,
+                           SafeImage (next/image that hides itself instead of showing
+                           a broken-image icon if a URL ever 404s), Icons, Counter
+lib/
+  site.js                 Brand/contact/social constants — the single source of truth
+  vehicles.js             Vehicle inventory data
+public/images/            Logo + favicon
+```
 
 ## Updating the vehicle stock
 
-Edit the `VEHICLES` array at the top of `assets/js/main.js`. Each entry:
+Edit the `VEHICLES` array in `lib/vehicles.js`. Each entry:
 
 ```js
 {
   id: "v13",
+  slug: "toyota-corolla",           // becomes the URL: /inventory/toyota-corolla
   title: "Toyota Corolla",
-  category: "cars", // cars | trucks | buses | machinery | generators | tractors
+  category: "cars",                 // cars | trucks | buses | machinery | generators | tractors
   year: "2018",
   mileage: "50,000 km",
   fuel: "Petrol",
   transmission: "Automatic",
-  price: "Contact for Price", // or e.g. "$8,500 FOB"
-  icon: "car", // see ICONS keys in the same file
+  price: "Contact for Price",       // or e.g. "$8,500 FOB"
+  icon: "car",                      // fallback icon key, see VEHICLE_ICONS in components/Icons.js
+  img: "https://...",               // full-size photo URL
+  imgAlt: "Toyota Corolla sedan",
 }
 ```
 
-The Home page shows the first 6 vehicles; the Inventory page shows all of them. These are currently **sample/placeholder listings**, illustrated with real reference photos of the same make/model (see "About the photos" below) — replace `title`/specs/`price` with real stock as it comes in, and swap `img` for a photo of your actual unit once available.
+Adding a vehicle automatically gives it a listing card, its own detail page (`generateStaticParams` picks it up on the next build), and a sitemap entry.
 
 ## About the photos
 
-Every photo on the site (hero, vehicle cards, category banners, About page) is a freely-licensed reference photo pulled from Wikimedia Commons — real photos of the same make/model/location, not stock renders. They're hotlinked directly from `commons.wikimedia.org/wiki/Special:FilePath/...`, so there's nothing to host, but two things follow from that:
+Every photo on the site is currently a real, freely-licensed reference photo of the same make/model pulled from Wikimedia Commons (`commons.wikimedia.org/wiki/Special:FilePath/...`) — not your actual stock. Swap `img` in `lib/vehicles.js` (and the photo URLs used directly in `app/page.js`, `app/about/page.js`, `app/contact/page.js`) for real photos as they become available; buyers trust real photos far more than reference images.
 
-1. **They're placeholders, not your inventory.** Swap each `img` URL for a real photo of your actual vehicle/yard as soon as you have one — buyers trust real photos far more than reference images.
-2. **Every image degrades gracefully.** Each `<img>` has `onerror="this.remove()"`, so if a URL ever breaks (Commons reorganizes a file, etc.) the photo just disappears and the card/section falls back to its solid navy background rather than showing a broken-image icon. Worth spot-checking occasionally that images still load.
+Two things to know about how images are handled:
 
-To replace a photo: swap the `src` (or the `wikiImg("...", width)` call in `assets/js/main.js`) for your own image URL, or a local file under `assets/images/`.
+1. **Next.js optimizes and re-serves every image** through `/_next/image`, so the hosting `remotePatterns` allowlist in `next.config.mjs` must include any new external photo host you use (Wikimedia is already allowed).
+2. **Every image degrades gracefully.** Photos go through the `SafeImage` component, which hides itself if a URL ever breaks instead of showing a broken-image icon — the card/section's navy background shows through instead. Still, it's worth spot-checking occasionally that photos load.
+
+## SEO
+
+- **Metadata**: each page sets its own `title`/`description`/canonical via the Next.js Metadata API (`app/*/page.js`); `app/layout.js` sets the sitewide defaults, Open Graph/Twitter cards, and title template.
+- **Structured data**: `app/layout.js` injects `AutoDealer` JSON-LD (address, geo, phone, socials); each vehicle page injects `Vehicle`/`Offer` JSON-LD.
+- **Sitemap & robots**: generated automatically from `lib/vehicles.js` — new vehicles appear in `/sitemap.xml` on the next build with no manual step.
+- **Before launch**: update `SITE.url` in `lib/site.js` to the real production domain (it currently points at a placeholder, `https://peshawartradingjapan.com`) — this feeds canonical URLs, Open Graph, sitemap and JSON-LD.
 
 ## Contact details used on the site
+
+All of these live in `lib/site.js` — update them there once and they update everywhere (header, footer, JSON-LD, WhatsApp links):
 
 - WhatsApp / Mobile: +81 90-4325-4004
 - Tel: 0766-50-8749 / Fax: 0766-50-8747
@@ -54,8 +89,8 @@ To replace a photo: swap the `src` (or the `wikiImg("...", width)` call in `asse
 - Facebook: facebook.com/share/1Bv9q3dHKu
 - TikTok: tiktok.com/@peshawar.trading.j
 
-Update these in the header/footer markup (repeated on each page) and in `WHATSAPP_NUMBER` at the top of `assets/js/main.js` if they change.
-
 ## Deploying
 
-Any static host works (GitHub Pages, Netlify, Vercel, plain Apache/Nginx). No environment variables or backend are required — the contact form opens the visitor's email client via `mailto:`.
+This is a standard Next.js app (uses `next/image` optimization, static generation, and file-based `sitemap.js`/`robots.js` routes) — it needs a Node.js-capable host, **not** a plain static host like GitHub Pages.
+
+**Recommended: [Vercel](https://vercel.com)** (made by the Next.js team, free tier is enough for this site) — connect the GitHub repo and it deploys automatically on every push, with HTTPS and a CDN included. Any other Node host (Netlify, Render, a VPS with `npm run build && npm run start`) also works.
