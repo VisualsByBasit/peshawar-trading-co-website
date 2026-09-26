@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import SafeImage from "@/components/SafeImage";
 import InventoryClient from "@/components/InventoryClient";
+import { pexelsImg } from "@/lib/site";
 
 export const metadata = {
   title: "Inventory",
@@ -13,7 +14,7 @@ export default function InventoryPage() {
     <>
       <section className="page-banner page-banner--photo">
         <div className="page-banner__bg">
-          <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyota_Hiace_H200_501.JPG?width=1600" alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
+          <SafeImage src={pexelsImg(9115461, 1600)} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
         </div>
         <div className="container">
           <span className="eyebrow">Our Stock</span>

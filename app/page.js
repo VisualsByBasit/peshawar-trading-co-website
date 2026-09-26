@@ -1,4 +1,5 @@
 import Link from "next/link";
+import HeroSlideshow from "@/components/HeroSlideshow";
 import ParallaxImage from "@/components/ParallaxImage";
 import Reveal from "@/components/Reveal";
 import AnimatedGrid from "@/components/AnimatedGrid";
@@ -6,7 +7,7 @@ import Counter from "@/components/Counter";
 import VehicleCard from "@/components/VehicleCard";
 import SafeImage from "@/components/SafeImage";
 import { WhatsAppIcon, PlayIcon, PinIcon, ShieldIcon, GlobeIcon, DollarIcon, ArrowRightIcon, VEHICLE_ICONS } from "@/components/Icons";
-import { SITE, whatsappLink } from "@/lib/site";
+import { SITE, whatsappLink, pexelsImg } from "@/lib/site";
 import { VEHICLES } from "@/lib/vehicles";
 
 export const metadata = {
@@ -29,7 +30,7 @@ export default function HomePage() {
     <>
       <section className="hero">
         <div className="hero__bg">
-          <ParallaxImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyama_New_Port_Toyama_Japan.jpg?width=1920" alt="Toyama New Port, Japan" priority />
+          <HeroSlideshow />
         </div>
         <div className="container">
           <div className="hero__content">
@@ -74,8 +75,8 @@ export default function HomePage() {
 
       <Reveal as="section" className="split">
         <div className="split__media">
-          <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyama_city_%26_Alps.jpg?width=1200" alt="Toyama city with the Japanese Alps" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
-          <span className="split__media-caption">Toyama, Japan — our home base</span>
+          <SafeImage src={pexelsImg(4141962, 1200)} alt="A car on display in a showroom" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+          <span className="split__media-caption">Every vehicle, inspected before it ships</span>
         </div>
         <div className="split__copy">
           <span className="eyebrow">Who We Are</span>
@@ -115,7 +116,7 @@ export default function HomePage() {
 
       <section className="spotlight">
         <div className="spotlight__bg">
-          <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyota_Land_Cruiser_Prado_90_005.JPG?width=1920" alt="Toyota Land Cruiser Prado" fill sizes="100vw" style={{ objectFit: "cover" }} />
+          <ParallaxImage src={pexelsImg(19410452, 1920)} alt="White SUV, representative of the Toyota Land Cruiser Prado" />
         </div>
         <div className="container">
           <span className="spotlight__tag">Stock Spotlight</span>
@@ -191,7 +192,7 @@ export default function HomePage() {
           </Reveal>
           <Reveal as="div" className="video-grid">
             <a className="video-card" href={SITE.social.instagram} target="_blank" rel="noopener">
-              <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyama_New_Port_Toyama_Japan.jpg?width=1000" alt="Watch vehicle videos on Instagram" fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
+              <SafeImage src={pexelsImg(5975528, 1000)} alt="Watch vehicle videos on Instagram" fill sizes="(max-width: 980px) 100vw, 45vw" style={{ objectFit: "cover" }} />
               <span className="video-card__play"><PlayIcon width={22} height={22} /></span>
               <div className="video-card__body">
                 <span className="video-card__platform">Instagram</span>
@@ -199,7 +200,7 @@ export default function HomePage() {
               </div>
             </a>
             <a className="video-card" href={SITE.social.tiktok} target="_blank" rel="noopener">
-              <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyota_Hiace_H200_501.JPG?width=700" alt="Watch vehicle walk-arounds on TikTok" fill sizes="(max-width: 980px) 50vw, 25vw" style={{ objectFit: "cover" }} />
+              <SafeImage src={pexelsImg(9115461, 700)} alt="Watch vehicle walk-arounds on TikTok" fill sizes="(max-width: 980px) 50vw, 25vw" style={{ objectFit: "cover" }} />
               <span className="video-card__play"><PlayIcon width={22} height={22} /></span>
               <div className="video-card__body">
                 <span className="video-card__platform">TikTok</span>
@@ -207,7 +208,7 @@ export default function HomePage() {
               </div>
             </a>
             <a className="video-card" href={SITE.social.facebook} target="_blank" rel="noopener">
-              <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Komatsu_excavator.jpg?width=700" alt="Watch machinery videos on Facebook" fill sizes="(max-width: 980px) 50vw, 25vw" style={{ objectFit: "cover" }} />
+              <SafeImage src={pexelsImg(13098128, 700)} alt="Watch machinery videos on Facebook" fill sizes="(max-width: 980px) 50vw, 25vw" style={{ objectFit: "cover" }} />
               <span className="video-card__play"><PlayIcon width={22} height={22} /></span>
               <div className="video-card__body">
                 <span className="video-card__platform">Facebook</span>

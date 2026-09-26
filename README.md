@@ -63,12 +63,13 @@ Adding a vehicle automatically gives it a listing card, its own detail page (`ge
 
 ## About the photos
 
-Every photo on the site is currently a real, freely-licensed reference photo of the same make/model pulled from Wikimedia Commons (`commons.wikimedia.org/wiki/Special:FilePath/...`) — not your actual stock. Swap `img` in `lib/vehicles.js` (and the photo URLs used directly in `app/page.js`, `app/about/page.js`, `app/contact/page.js`) for real photos as they become available; buyers trust real photos far more than reference images.
+Every photo on the site — vehicle cards, the hero slideshow, page banners — is currently a real, freely-licensed **representative** photo pulled from [Pexels](https://www.pexels.com) (`images.pexels.com/photos/<id>/...`), not your actual stock or showroom. Swap `img` in `lib/vehicles.js`, the `HERO_SLIDES` array in `lib/site.js`, and the photo calls in `app/page.js` / `app/about/page.js` / `app/contact/page.js` for real photos as they become available — buyers trust real photos far more than reference images, and it's worth doing before the site goes live.
 
-Two things to know about how images are handled:
+Three things to know about how images are handled:
 
-1. **Next.js optimizes and re-serves every image** through `/_next/image`, so the hosting `remotePatterns` allowlist in `next.config.mjs` must include any new external photo host you use (Wikimedia is already allowed).
-2. **Every image degrades gracefully.** Photos go through the `SafeImage` component, which hides itself if a URL ever breaks instead of showing a broken-image icon — the card/section's navy background shows through instead. Still, it's worth spot-checking occasionally that photos load.
+1. **Pexels, not Wikimedia.** An earlier version of this site hotlinked Wikimedia Commons. That broke in practice: Wikimedia requires a descriptive `User-Agent` header on every request (their [User-Agent policy](https://meta.wikimedia.org/wiki/User-Agent_policy)), Next.js's image optimizer doesn't send one, and Wikimedia returns `403 Forbidden` — which showed up as permanently blank/navy image boxes. Pexels' CDN is built for exactly this (hotlinking into any app, no required headers), so it doesn't have that problem.
+2. **Next.js optimizes and re-serves every image** through `/_next/image`, so the hosting `remotePatterns` allowlist in `next.config.mjs` must include any new external photo host you use (`images.pexels.com` is already allowed).
+3. **Every image degrades gracefully.** Photos go through the `SafeImage` component (or `HeroSlideshow`'s own error handling), which hides itself if a URL ever breaks instead of showing a broken-image icon — the card/section's navy background shows through instead. Still, it's worth spot-checking occasionally that photos load.
 
 ## SEO
 

@@ -4,8 +4,8 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "commons.wikimedia.org",
-        pathname: "/wiki/Special:FilePath/**",
+        hostname: "images.pexels.com",
+        pathname: "/photos/**",
       },
     ],
   },

@@ -254,9 +254,45 @@ header.site-header {
 .hero__bg::after {
   content: "";
   position: absolute; inset: 0;
+  z-index: 1;
   background:
     linear-gradient(180deg, rgba(9,15,28,0.55) 0%, rgba(9,15,28,0.35) 30%, rgba(9,15,28,0.88) 82%, #0a1220 100%),
     linear-gradient(90deg, rgba(9,15,28,0.75) 0%, rgba(9,15,28,0.15) 46%, rgba(9,15,28,0.15) 60%, rgba(9,15,28,0.75) 100%);
+}
+
+/* Hero slideshow: stacked slides cross-fade via opacity */
+.hero__slide {
+  position: absolute !important;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  object-position: center 55%;
+}
+.hero__slide.is-active { opacity: 1; }
+.hero__slide-dots {
+  position: absolute;
+  z-index: 2;
+  left: 50%;
+  bottom: 26px;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 10px;
+}
+.hero__slide-dots button {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.35);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease;
+}
+.hero__slide-dots button.is-active {
+  background: var(--gold-light);
+  transform: scale(1.3);
+}
+@media (max-width: 720px) {
+  .hero__slide-dots { display: none; }
 }
 .hero .container { position: relative; z-index: 1; padding-bottom: 64px; }
 .hero__content { max-width: 760px; }
@@ -1043,11 +1079,6 @@ footer.site-footer {
   .hero__badge, .hero__kicker, .hero h1, .hero p.lead, .hero__actions { opacity: 1; animation: none; }
 }
 
-/* Parallax-driven backgrounds (JS sets --parallax-y on scroll) */
-.hero__bg img, .spotlight__bg img {
-  transform: translateY(calc(var(--parallax-y, 0px)));
-  will-change: transform;
-}
 
 /* ==========================================================================
    Marquee ticker

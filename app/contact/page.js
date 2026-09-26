@@ -2,7 +2,7 @@ import Link from "next/link";
 import SafeImage from "@/components/SafeImage";
 import ContactForm from "@/components/ContactForm";
 import { PinIcon, PhoneIcon, WhatsAppIcon, MailIcon, ClockIcon } from "@/components/Icons";
-import { SITE, whatsappLink } from "@/lib/site";
+import { SITE, whatsappLink, pexelsImg } from "@/lib/site";
 
 export const metadata = {
   title: "Contact Us",
@@ -15,7 +15,7 @@ export default function ContactPage() {
     <>
       <section className="page-banner page-banner--photo">
         <div className="page-banner__bg">
-          <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyama_New_Port_Toyama_Japan.jpg?width=1600" alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
+          <SafeImage src={pexelsImg(5975528, 1600)} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
         </div>
         <div className="container">
           <span className="eyebrow">Get In Touch</span>

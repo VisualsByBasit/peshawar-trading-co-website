@@ -3,7 +3,7 @@ import SafeImage from "@/components/SafeImage";
 import Reveal from "@/components/Reveal";
 import AnimatedGrid from "@/components/AnimatedGrid";
 import { WhatsAppIcon, CheckIcon, ShieldIcon, VEHICLE_ICONS } from "@/components/Icons";
-import { SITE, whatsappLink } from "@/lib/site";
+import { SITE, whatsappLink, pexelsImg } from "@/lib/site";
 
 export const metadata = {
   title: "About Us",
@@ -16,7 +16,7 @@ export default function AboutPage() {
     <>
       <section className="page-banner page-banner--photo">
         <div className="page-banner__bg">
-          <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Komatsu_excavator.jpg?width=1600" alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
+          <SafeImage src={pexelsImg(13098128, 1600)} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
         </div>
         <div className="container">
           <span className="eyebrow">About Us</span>
@@ -28,7 +28,7 @@ export default function AboutPage() {
       <section className="section">
         <div className="container about-grid">
           <div className="about-media">
-            <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyama_city_%26_Alps.jpg?width=1000" alt="Toyama city with the Japanese Alps" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+            <SafeImage src={pexelsImg(4895421, 1000)} alt="Sales staff showing a customer a car" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
           </div>
           <div>
             <span className="eyebrow">Our Story</span>
@@ -46,7 +46,7 @@ export default function AboutPage() {
 
       <Reveal as="section" className="split split--reverse">
         <div className="split__media">
-          <SafeImage src="https://commons.wikimedia.org/wiki/Special:FilePath/Toyota_Hiace_H200_501.JPG?width=1200" alt="Toyota Hiace van, one of our export categories" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
+          <SafeImage src={pexelsImg(9115461, 1200)} alt="White cargo van, one of our export categories" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
           <span className="split__media-caption">Sourced, inspected, exported</span>
         </div>
         <div className="split__copy">
