@@ -33,7 +33,16 @@ Edit the `VEHICLES` array at the top of `assets/js/main.js`. Each entry:
 }
 ```
 
-The Home page shows the first 6 vehicles; the Inventory page shows all of them. These are currently **sample/placeholder listings** — replace with real stock and, ideally, real photos (swap the icon placeholder in `assets/js/main.js` → `vehicleCard()` for an `<img>` tag once photos are available).
+The Home page shows the first 6 vehicles; the Inventory page shows all of them. These are currently **sample/placeholder listings**, illustrated with real reference photos of the same make/model (see "About the photos" below) — replace `title`/specs/`price` with real stock as it comes in, and swap `img` for a photo of your actual unit once available.
+
+## About the photos
+
+Every photo on the site (hero, vehicle cards, category banners, About page) is a freely-licensed reference photo pulled from Wikimedia Commons — real photos of the same make/model/location, not stock renders. They're hotlinked directly from `commons.wikimedia.org/wiki/Special:FilePath/...`, so there's nothing to host, but two things follow from that:
+
+1. **They're placeholders, not your inventory.** Swap each `img` URL for a real photo of your actual vehicle/yard as soon as you have one — buyers trust real photos far more than reference images.
+2. **Every image degrades gracefully.** Each `<img>` has `onerror="this.remove()"`, so if a URL ever breaks (Commons reorganizes a file, etc.) the photo just disappears and the card/section falls back to its solid navy background rather than showing a broken-image icon. Worth spot-checking occasionally that images still load.
+
+To replace a photo: swap the `src` (or the `wikiImg("...", width)` call in `assets/js/main.js`) for your own image URL, or a local file under `assets/images/`.
 
 ## Contact details used on the site
 
