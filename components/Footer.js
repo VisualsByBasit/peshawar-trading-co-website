@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { SITE, whatsappLink } from "@/lib/site";
+import { VEHICLES } from "@/lib/vehicles";
 import { PinIcon, PhoneIcon, WhatsAppIcon, MailIcon, InstagramIcon, FacebookIcon, TikTokIcon } from "@/components/Icons";
 
 export default function Footer() {
@@ -10,70 +11,72 @@ export default function Footer() {
     <footer className="site-footer">
       <div className="container">
         <div className="footer-grid">
-          <div className="footer-col">
+          <div className="footer-col footer-col--brand">
             <div className="footer-brand">
-              <Image src="/images/logo-emblem.png" alt={`${SITE.name} logo`} width={40} height={40} style={{ height: 40, width: "auto" }} />
+              <span className="footer-logo">
+                <Image src="/images/logo-emblem.png" alt="" width={48} height={48} style={{ height: 44, width: "auto" }} />
+              </span>
               <span>{SITE.name}</span>
             </div>
-            <p>Exporting used cars, trucks, buses, construction machinery, generators and agricultural tractors from Toyama, Japan to buyers worldwide.</p>
+            <p>Licensed Japanese used-car exporter. Every vehicle is inspected, photographed and documented before it ships to you.</p>
             <div className="footer-socials">
               <a href={SITE.social.instagram} target="_blank" rel="noopener" aria-label="Instagram">
-                <InstagramIcon width={16} height={16} />
+                <InstagramIcon width={17} height={17} />
               </a>
               <a href={SITE.social.facebook} target="_blank" rel="noopener" aria-label="Facebook">
-                <FacebookIcon width={16} height={16} />
+                <FacebookIcon width={17} height={17} />
               </a>
               <a href={SITE.social.tiktok} target="_blank" rel="noopener" aria-label="TikTok">
-                <TikTokIcon width={16} height={16} />
+                <TikTokIcon width={17} height={17} />
               </a>
             </div>
           </div>
 
           <div className="footer-col">
-            <h5>Quick Links</h5>
+            <h5>Explore</h5>
             <ul>
               <li><Link href="/">Home</Link></li>
-              <li><Link href="/inventory">Inventory</Link></li>
+              <li><Link href="/inventory">Showroom</Link></li>
               <li><Link href="/about">About Us</Link></li>
               <li><Link href="/contact">Contact</Link></li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h5>Categories</h5>
+            <h5>In the showroom</h5>
             <ul>
-              <li><Link href="/inventory?cat=cars">Cars &amp; Vans</Link></li>
-              <li><Link href="/inventory?cat=trucks">Trucks</Link></li>
-              <li><Link href="/inventory?cat=machinery">Construction Machinery</Link></li>
-              <li><Link href="/inventory?cat=generators">Generators</Link></li>
-              <li><Link href="/inventory?cat=tractors">Agricultural Tractors</Link></li>
+              {VEHICLES.map((v) => (
+                <li key={v.id}>
+                  <Link href={`/inventory/${v.slug}`}>{v.title}</Link>
+                </li>
+              ))}
             </ul>
           </div>
 
           <div className="footer-col">
-            <h5>Contact</h5>
+            <h5>Visit &amp; contact</h5>
             <ul>
               <li>
                 <a href={SITE.mapsUrl} target="_blank" rel="noopener">
-                  <PinIcon width={15} height={15} />
+                  <PinIcon width={16} height={16} />
                   {SITE.address.full}
                 </a>
               </li>
               <li>
                 <a href={`tel:${SITE.phone}`}>
-                  <PhoneIcon width={15} height={15} />
-                  Tel: {SITE.phoneDisplay}
+                  <PhoneIcon width={16} height={16} />
+                  {SITE.phoneDisplay}
                 </a>
               </li>
               <li>
                 <a href={whatsappLink()} target="_blank" rel="noopener">
-                  <WhatsAppIcon width={15} height={15} />
-                  WhatsApp: {SITE.whatsappDisplay}
+                  <WhatsAppIcon width={16} height={16} />
+                  {SITE.whatsappDisplay}
                 </a>
               </li>
               <li>
                 <a href={`mailto:${SITE.email}`}>
-                  <MailIcon width={15} height={15} />
+                  <MailIcon width={16} height={16} />
                   {SITE.email}
                 </a>
               </li>

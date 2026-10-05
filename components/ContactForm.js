@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { SITE } from "@/lib/site";
 
-const INTERESTS = ["General enquiry", "Cars & Vans", "Trucks", "Buses", "Construction Machinery", "Generators", "Agricultural Tractors"];
+const INTERESTS = ["General enquiry", "Buying a specific car", "Price and shipping quote", "Source a car for me", "Trucks, buses and machinery"];
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
@@ -28,8 +28,8 @@ export default function ContactForm() {
 
   return (
     <div className="form-card">
-      <h2 style={{ fontFamily: "var(--font-playfair), serif", color: "var(--navy)", marginBottom: 8 }}>Send Us a Message</h2>
-      <p style={{ color: "var(--muted)", marginBottom: 24 }}>Fill out the form and we&apos;ll get back to you &mdash; or message us directly on WhatsApp for a faster reply.</p>
+      <h2>Send us a message</h2>
+      <p className="form-lead">Fill out the form and we&apos;ll get back to you &mdash; or message us directly on WhatsApp for a faster reply.</p>
 
       <div className={`form-success${submitted ? " show" : ""}`}>
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 6 9 17l-5-5" /></svg>

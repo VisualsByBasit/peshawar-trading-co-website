@@ -17,26 +17,21 @@ npm run start     # serve the production build
 ## Structure
 
 ```
-app/
-  layout.js              Root layout: fonts, global <head> metadata, Organization JSON-LD
-  page.js                Home page
-  sitemap.js              /sitemap.xml
-  robots.js               /robots.txt
-  manifest.js              /manifest.webmanifest (PWA-style app icon metadata)
-  inventory/page.js       Inventory listing (filters + search)
-  inventory/[slug]/page.js  One page per vehicle (SSG, own metadata + JSON-LD)
-  about/page.js
-  contact/page.js
-  globals.css             All styling (design tokens, layout, components, animations)
-components/               Header, Footer, VehicleCard, ContactForm, InventoryClient,
-                           Reveal / AnimatedGrid (scroll animations), ParallaxImage,
-                           SafeImage (next/image that hides itself instead of showing
-                           a broken-image icon if a URL ever 404s), Icons, Counter
-lib/
-  site.js                 Brand/contact/social constants — the single source of truth
-  vehicles.js             Vehicle inventory data
-public/images/            Logo + favicon
+app/            Pages: home, /inventory (showroom), /inventory/[slug] (one per car),
+                about, contact, sitemap, robots, manifest. globals.css = all styling.
+components/     Header, Footer, Hero, VehicleCard, Gallery (lightbox), InventoryClient,
+                ContactForm, Reveal, Icons, WhatsappFloat
+lib/site.js     Brand/contact constants (single source of truth)
+lib/vehicles.js Showroom stock
+public/cars/    Photos, one folder per car: public/cars/<slug>/01.jpg, 02.jpg ...
+source-photos/  Original client photos as received (not served by the site)
 ```
+
+## Adding a car
+
+1. Put its photos in `public/cars/<slug>/` named `01.jpg`, `02.jpg`, ... (first = cover).
+2. Add an entry to `lib/vehicles.js` (copy an existing one). Mark the auction-sheet
+   photo with `"sheet"` so it displays uncropped. Set `price` to a string to show it.
 
 ## Updating the vehicle stock
 

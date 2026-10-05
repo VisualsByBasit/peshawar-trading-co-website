@@ -14,7 +14,7 @@ const poppins = Poppins({
 
 const playfair = Playfair_Display({
   subsets: ["latin"],
-  weight: ["700", "800"],
+  weight: ["600", "700"],
   style: ["normal", "italic"],
   variable: "--font-playfair",
   display: "swap",
@@ -29,12 +29,12 @@ export const metadata = {
   description: SITE.description,
   keywords: [
     "Japan used car exporter",
-    "used car export Japan",
-    "Japanese used truck export",
-    "used construction machinery Japan",
-    "Japan vehicle auction export",
-    "Toyama car exporter",
+    "used Toyota export Japan",
     "buy used Japanese cars",
+    "Toyota Land Cruiser Prado export",
+    "Toyota Prius export",
+    "Toyama car exporter",
+    "Japanese hybrid cars for sale",
   ],
   authors: [{ name: SITE.name }],
   alternates: { canonical: "/" },
@@ -92,7 +92,7 @@ function OrganizationJsonLd() {
     },
     sameAs: [SITE.social.instagram, SITE.social.facebook, SITE.social.tiktok],
     openingHours: "Mo-Sa 09:00-18:00",
-    priceRange: "$$",
+    
   };
   return (
     <script

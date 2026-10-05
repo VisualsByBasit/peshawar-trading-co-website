@@ -1,83 +1,83 @@
 import Link from "next/link";
-import SafeImage from "@/components/SafeImage";
 import ContactForm from "@/components/ContactForm";
 import { PinIcon, PhoneIcon, WhatsAppIcon, MailIcon, ClockIcon } from "@/components/Icons";
-import { SITE, whatsappLink, pexelsImg } from "@/lib/site";
+import { SITE, whatsappLink } from "@/lib/site";
 
 export const metadata = {
   title: "Contact Us",
-  description: `Get in touch with ${SITE.name} — used vehicle and machinery exporter based in Imizu, Toyama, Japan.`,
+  description: `Contact ${SITE.name}, a used-car exporter based in Imizu, Toyama, Japan. Call, WhatsApp, email or visit.`,
   alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {
+  const items = [
+    { icon: PinIcon, title: "Showroom address", body: <a href={SITE.mapsUrl} target="_blank" rel="noopener">{SITE.address.full}</a> },
+    {
+      icon: PhoneIcon,
+      title: "Phone / Fax",
+      body: (
+        <>
+          <a href={`tel:${SITE.phone}`}>Tel: {SITE.phoneDisplay}</a>
+          <br />
+          Fax: {SITE.faxDisplay}
+        </>
+      ),
+    },
+    {
+      icon: WhatsAppIcon,
+      title: "WhatsApp / Mobile",
+      body: (
+        <a target="_blank" rel="noopener" href={whatsappLink("Hello Peshawar Trading Co., I'd like to get in touch.")}>
+          {SITE.whatsappDisplay}
+        </a>
+      ),
+    },
+    { icon: MailIcon, title: "Email", body: <a href={`mailto:${SITE.email}`}>{SITE.email}</a> },
+    {
+      icon: ClockIcon,
+      title: "Opening hours",
+      body: (
+        <>
+          {SITE.hours}
+          <br />
+          WhatsApp answered around the clock
+        </>
+      ),
+    },
+  ];
+
   return (
     <>
-      <section className="page-banner page-banner--photo">
-        <div className="page-banner__bg">
-          <SafeImage src={pexelsImg(5975528, 1600)} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
-        </div>
+      <section className="page-head">
         <div className="container">
-          <span className="eyebrow">Get In Touch</span>
-          <h1>Contact Peshawar Trading Co.</h1>
           <p className="breadcrumb"><Link href="/">Home</Link> / Contact</p>
+          <h1>Talk to our team</h1>
+          <p>Questions about a car, a price, or shipping to your country? We usually reply within a few hours.</p>
         </div>
       </section>
 
       <section className="section">
-        <div className="container contact-grid">
-          <div>
-            <div className="contact-card">
-              <div className="contact-card__icon"><PinIcon width={22} height={22} /></div>
-              <div>
-                <h4>Address</h4>
-                <p>{SITE.address.full}</p>
+        <div className="container contact">
+          <div className="contact__info">
+            {items.map(({ icon: Icon, title, body }) => (
+              <div className="contact-card" key={title}>
+                <span className="contact-card__icon"><Icon width={22} height={22} /></span>
+                <div>
+                  <h3>{title}</h3>
+                  <p>{body}</p>
+                </div>
               </div>
-            </div>
-            <div className="contact-card">
-              <div className="contact-card__icon"><PhoneIcon width={22} height={22} /></div>
-              <div>
-                <h4>Phone / Fax</h4>
-                <p>
-                  <a href={`tel:${SITE.phone}`}>Tel: {SITE.phoneDisplay}</a>
-                  <br />Fax: {SITE.faxDisplay}
-                </p>
-              </div>
-            </div>
-            <div className="contact-card">
-              <div className="contact-card__icon"><WhatsAppIcon width={22} height={22} /></div>
-              <div>
-                <h4>WhatsApp / Mobile</h4>
-                <p><a target="_blank" rel="noopener" href={whatsappLink("Hello Peshawar Trading Co., I'd like to get in touch.")}>{SITE.whatsappDisplay}</a></p>
-              </div>
-            </div>
-            <div className="contact-card">
-              <div className="contact-card__icon"><MailIcon width={22} height={22} /></div>
-              <div>
-                <h4>Email</h4>
-                <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
-              </div>
-            </div>
-            <div className="contact-card">
-              <div className="contact-card__icon"><ClockIcon width={22} height={22} /></div>
-              <div>
-                <h4>Business Hours</h4>
-                <p>{SITE.hours}<br />Available on WhatsApp anytime</p>
-              </div>
-            </div>
+            ))}
           </div>
-
-          <div>
-            <ContactForm />
-          </div>
+          <ContactForm />
         </div>
       </section>
 
       <section className="section section--cream">
         <div className="container">
           <div className="section-head">
-            <span className="eyebrow">Find Us</span>
-            <h2>Our Location in Toyama, Japan</h2>
+            <span className="eyebrow eyebrow--dark">Find us</span>
+            <h2>Our showroom in Toyama, Japan</h2>
           </div>
           <div className="map-wrap">
             <iframe
@@ -87,11 +87,9 @@ export default function ContactPage() {
               title={`${SITE.name} location map`}
             />
           </div>
-          <div style={{ textAlign: "center", marginTop: 24 }}>
-            <a className="btn btn--outline-dark" href={SITE.mapsUrl} target="_blank" rel="noopener">
-              Get Directions on Google Maps
-            </a>
-          </div>
+          <p className="map-link">
+            <a className="btn btn--outline" href={SITE.mapsUrl} target="_blank" rel="noopener">Get directions on Google Maps</a>
+          </p>
         </div>
       </section>
     </>

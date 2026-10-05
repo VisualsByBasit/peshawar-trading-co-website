@@ -1,40 +1,44 @@
 import Link from "next/link";
-import SafeImage from "@/components/SafeImage";
-import { CATEGORY_LABELS, whatsappLink } from "@/lib/site";
-import { VEHICLE_ICONS, WhatsAppIcon } from "@/components/Icons";
+import Image from "next/image";
+import { whatsappLink } from "@/lib/site";
+import { coverOf } from "@/lib/vehicles";
+import { SpeedIcon, FuelIcon, GearIcon, CalendarIcon, WhatsAppIcon, ArrowRightIcon } from "@/components/Icons";
 
-export default function VehicleCard({ vehicle }) {
-  const Icon = VEHICLE_ICONS[vehicle.icon] || VEHICLE_ICONS.car;
-  const message = `Hello Peshawar Trading Co., I'm interested in the ${vehicle.title} (Ref: ${vehicle.id.toUpperCase()}). Could you share more details and the price?`;
+export default function VehicleCard({ vehicle, priority = false }) {
+  const cover = coverOf(vehicle);
+  const message = `Hello Peshawar Trading Co., I'm interested in the ${vehicle.title} (Ref: ${vehicle.id}). Could you share the price and shipping options?`;
 
   return (
-    <article className="veh-card glow-target">
-      <Link href={`/inventory/${vehicle.slug}`} className="veh-card__media">
-        <span className="veh-card__fallback">
-          <Icon width={88} height={88} />
-        </span>
-        <SafeImage src={vehicle.img} alt={vehicle.imgAlt || vehicle.title} fill sizes="(max-width: 720px) 100vw, (max-width: 1200px) 50vw, 380px" style={{ objectFit: "cover" }} />
-        <span className="veh-card__tag">{CATEGORY_LABELS[vehicle.category] || vehicle.category}</span>
+    <article className="card">
+      <Link href={`/inventory/${vehicle.slug}`} className="card__media ph" aria-label={`View ${vehicle.title}`}>
+        <Image src={cover.src} alt={cover.alt} fill priority={priority} sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 380px" />
+        {vehicle.badge && <span className="tag tag--gold">{vehicle.badge}</span>}
+        <span className="tag tag--ref">{vehicle.id}</span>
       </Link>
-      <div className="veh-card__body">
-        <h3 className="veh-card__title">
+      <div className="card__body">
+        <p className="card__make">{vehicle.make} &middot; {vehicle.type}</p>
+        <h3 className="card__title">
           <Link href={`/inventory/${vehicle.slug}`}>{vehicle.title}</Link>
         </h3>
-        <div className="veh-card__specs">
-          <span>{vehicle.year}</span>
-          <span>{vehicle.mileage}</span>
-          <span>{vehicle.fuel}</span>
-          <span>{vehicle.transmission}</span>
-        </div>
-        <div className="veh-card__price">
-          <small>Price</small>
-          {vehicle.price}
-        </div>
-        <div className="veh-card__foot">
-          <a className="btn btn--whatsapp btn--sm" target="_blank" rel="noopener" href={whatsappLink(message)}>
-            <WhatsAppIcon width={18} height={18} />
-            Enquire
-          </a>
+        <ul className="card__specs">
+          <li><CalendarIcon width={16} height={16} />{vehicle.year}</li>
+          <li><SpeedIcon width={16} height={16} />{vehicle.mileage}</li>
+          <li><FuelIcon width={16} height={16} />{vehicle.fuel}</li>
+          <li><GearIcon width={16} height={16} />{vehicle.transmission}</li>
+        </ul>
+        <div className="card__foot">
+          <div className="price">
+            <small>Price</small>
+            {vehicle.price || "On request"}
+          </div>
+          <div className="card__actions">
+            <a className="icon-btn icon-btn--wa" target="_blank" rel="noopener" href={whatsappLink(message)} aria-label={`Enquire about ${vehicle.title} on WhatsApp`}>
+              <WhatsAppIcon width={20} height={20} />
+            </a>
+            <Link className="btn btn--dark btn--sm" href={`/inventory/${vehicle.slug}`}>
+              Details <ArrowRightIcon width={16} height={16} />
+            </Link>
+          </div>
         </div>
       </div>
     </article>

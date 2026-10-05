@@ -1,130 +1,102 @@
 import Link from "next/link";
-import SafeImage from "@/components/SafeImage";
+import Image from "next/image";
 import Reveal from "@/components/Reveal";
-import AnimatedGrid from "@/components/AnimatedGrid";
-import { WhatsAppIcon, CheckIcon, ShieldIcon, VEHICLE_ICONS } from "@/components/Icons";
-import { SITE, whatsappLink, pexelsImg } from "@/lib/site";
+import { WhatsAppIcon, CheckIcon, ShieldIcon, FileIcon, GlobeIcon, SearchIcon } from "@/components/Icons";
+import { SITE, whatsappLink } from "@/lib/site";
+import { VEHICLES } from "@/lib/vehicles";
 
 export const metadata = {
   title: "About Us",
-  description: `Learn about ${SITE.name}, a licensed used vehicle and machinery exporter based in Imizu, Toyama, Japan.`,
+  description: `${SITE.name} is a licensed used-car exporter based in Imizu, Toyama, Japan, shipping inspected Japanese cars worldwide.`,
   alternates: { canonical: "/about" },
 };
 
+const VALUES = [
+  { icon: SearchIcon, title: "Total transparency", text: "Full photo sets, auction sheets and honest condition notes, including repairs." },
+  { icon: ShieldIcon, title: "Licensed & accountable", text: "A registered Japanese company with a physical address, permit and named director." },
+  { icon: FileIcon, title: "Clean paperwork", text: "Clear invoices and export documents so customs clearance is smooth." },
+  { icon: GlobeIcon, title: "Global reach", text: "We ship to buyers around the world and stay in touch until the car arrives." },
+];
+
 export default function AboutPage() {
+  const cover = VEHICLES[0].photos[0];
+
   return (
     <>
-      <section className="page-banner page-banner--photo">
-        <div className="page-banner__bg">
-          <SafeImage src={pexelsImg(13098128, 1600)} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
-        </div>
+      <section className="page-head">
         <div className="container">
-          <span className="eyebrow">About Us</span>
-          <h1>Trusted Exporter, Direct from Japan</h1>
           <p className="breadcrumb"><Link href="/">Home</Link> / About Us</p>
+          <h1>A trusted exporter, direct from Japan</h1>
+          <p>{SITE.name} finds, inspects and ships quality used cars from Toyama to customers worldwide.</p>
         </div>
       </section>
 
       <section className="section">
-        <div className="container about-grid">
-          <div className="about-media">
-            <SafeImage src={pexelsImg(4895421, 1000)} alt="Sales staff showing a customer a car" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
-          </div>
-          <div>
-            <span className="eyebrow">Our Story</span>
-            <h2>{SITE.name}</h2>
-            <p>Based in Imizu City, Toyama Prefecture, Japan, {SITE.name} ({SITE.legalNameJa}) specializes in the export of used vehicles and auto parts to customers around the world. We deal in cars, trucks, buses, construction machinery, generators and agricultural tractors, alongside vehicle dismantling and scrap metal services.</p>
-            <p>Every vehicle we export is sourced directly in Japan &mdash; from auctions, dealers and private sellers &mdash; so buyers get genuine, well-maintained stock at fair prices, backed by clear documentation for smooth export and shipping.</p>
-            <div className="badge-row">
-              <span className="badge-pill"><CheckIcon width={15} height={15} /> Licensed Business</span>
-              <span className="badge-pill"><CheckIcon width={15} height={15} /> Based in Toyama, Japan</span>
-              <span className="badge-pill"><CheckIcon width={15} height={15} /> Worldwide Export</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Reveal as="section" className="split split--reverse">
-        <div className="split__media">
-          <SafeImage src={pexelsImg(9115461, 1200)} alt="White cargo van, one of our export categories" fill sizes="(max-width: 980px) 100vw, 50vw" style={{ objectFit: "cover" }} />
-          <span className="split__media-caption">Sourced, inspected, exported</span>
-        </div>
-        <div className="split__copy">
-          <span className="eyebrow">Our Approach</span>
-          <h2>Quality checked before it ever reaches the port</h2>
-          <p>We don&apos;t just broker vehicles &mdash; we inspect them. Every car, truck and machine that passes through our yard is checked for condition, mileage accuracy and mechanical soundness before we confirm a sale, so what you see is what arrives.</p>
-          <p className="pull-line">&quot;Buyers overseas can&apos;t inspect the vehicle themselves &mdash; so we do it as if we were buying it for ourselves.&quot;</p>
-        </div>
-      </Reveal>
-
-      <section className="section section--navy">
-        <div className="container">
-          <div className="timeline-stat">
-            <div><strong>6+</strong><span>Vehicle &amp; Machinery Categories</span></div>
-            <div><strong>934-0011</strong><span>Toyama, Japan HQ</span></div>
-            <div><strong>Worldwide</strong><span>Export Reach</span></div>
-            <div><strong>Direct</strong><span>Japan Sourcing</span></div>
-          </div>
-        </div>
-      </section>
-
-      <section className="section section--cream">
-        <div className="container">
-          <Reveal as="div" className="section-head">
-            <span className="eyebrow">What We Do</span>
-            <h2>Our Services</h2>
+        <div className="container about">
+          <Reveal className="about__media ph">
+            <Image src={cover.src} alt={cover.alt} fill sizes="(max-width: 980px) 100vw, 540px" />
           </Reveal>
-          <AnimatedGrid className="value-grid">
-            <div className="value-card glow-target">
-              <VEHICLE_ICONS.car width={30} height={30} />
-              <h3>Used Car &amp; Auto Parts Export</h3>
-              <p>Sourcing and exporting used cars, vans and genuine auto parts.</p>
-            </div>
-            <div className="value-card glow-target">
-              <VEHICLE_ICONS.excavator width={30} height={30} />
-              <h3>Construction Machinery</h3>
-              <p>Excavators, loaders and heavy equipment for project needs.</p>
-            </div>
-            <div className="value-card glow-target">
-              <VEHICLE_ICONS.tractor width={30} height={30} />
-              <h3>Agricultural Tractors</h3>
-              <p>Farm tractors and equipment sourced from trusted Japanese sellers.</p>
-            </div>
-            <div className="value-card glow-target">
-              <ShieldIcon width={30} height={30} />
-              <h3>Vehicle Dismantling &amp; Scrap</h3>
-              <p>Licensed dismantling services and iron scrap processing.</p>
-            </div>
-          </AnimatedGrid>
+          <Reveal className="about__copy">
+            <span className="eyebrow eyebrow--dark">Our Story</span>
+            <h2>{SITE.name}</h2>
+            <p>
+              Based in Imizu City, Toyama Prefecture, {SITE.name} ({SITE.legalNameJa}) exports used vehicles and auto parts to customers around the world. Our showroom focuses on well-kept Japanese cars, and we also supply trucks, buses, construction machinery, generators and agricultural tractors.
+            </p>
+            <p>
+              Every car is sourced directly in Japan from auctions, dealers and private sellers. We photograph it thoroughly, read the inspection sheet, and tell you plainly what we see, so you can buy with confidence from anywhere.
+            </p>
+            <ul className="checks">
+              <li><CheckIcon width={18} height={18} /> Licensed business in Toyama, Japan</li>
+              <li><CheckIcon width={18} height={18} /> Direct sourcing, no middlemen</li>
+              <li><CheckIcon width={18} height={18} /> Worldwide export and shipping</li>
+            </ul>
+          </Reveal>
+        </div>
+      </section>
+
+      <section className="section section--dark">
+        <div className="container">
+          <Reveal className="section-head section-head--center">
+            <span className="eyebrow">What we stand for</span>
+            <h2>Built on trust</h2>
+          </Reveal>
+          <Reveal stagger className="values">
+            {VALUES.map(({ icon: Icon, title, text }) => (
+              <div className="value" key={title}>
+                <span className="step__icon"><Icon width={26} height={26} /></span>
+                <h3>{title}</h3>
+                <p>{text}</p>
+              </div>
+            ))}
+          </Reveal>
         </div>
       </section>
 
       <section className="section">
         <div className="container">
-          <Reveal as="div" className="license-card">
-            <ShieldIcon width={34} height={34} />
+          <Reveal className="license">
+            <ShieldIcon width={38} height={38} />
             <div>
-              <h4>Licensed Vehicle Dismantling Business</h4>
+              <h3>Licensed Vehicle Dismantling Business</h3>
               <p>
-                {SITE.name} operates under {SITE.license.label} No. <code>{SITE.license.number}</code>, registered in Japan. Director: {SITE.director}.
+                {SITE.name} operates under the {SITE.license.label}, No. <code>{SITE.license.number}</code>, registered in Japan. Director: {SITE.director}.
               </p>
             </div>
           </Reveal>
         </div>
       </section>
 
-      <section className="section section--cream">
+      <section className="section section--tight">
         <div className="container">
-          <Reveal as="div" className="cta-banner">
+          <Reveal className="cta">
             <div>
-              <h2>Want to know more about us?</h2>
-              <p>Reach out any time &mdash; we&apos;re happy to answer questions about our stock, export process or shipping.</p>
+              <h2>Ready to find your next car?</h2>
+              <p>Browse the showroom, or tell us what you are looking for and we will source it.</p>
             </div>
-            <div className="cta-banner__actions">
-              <Link className="btn btn--gold" href="/contact">Contact Us</Link>
-              <a className="btn btn--outline" target="_blank" rel="noopener" href={whatsappLink("Hello Peshawar Trading Co., I'd like to know more about your company.")}>
-                <WhatsAppIcon width={18} height={18} />
-                Chat on WhatsApp
+            <div className="cta__actions">
+              <Link className="btn btn--gold btn--lg" href="/inventory">View the showroom</Link>
+              <a className="btn btn--ghost btn--lg" target="_blank" rel="noopener" href={whatsappLink("Hello Peshawar Trading Co., I'd like to know more about your company.")}>
+                <WhatsAppIcon width={20} height={20} /> WhatsApp us
               </a>
             </div>
           </Reveal>

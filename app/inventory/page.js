@@ -1,33 +1,26 @@
-import { Suspense } from "react";
-import SafeImage from "@/components/SafeImage";
+import Link from "next/link";
 import InventoryClient from "@/components/InventoryClient";
-import { pexelsImg } from "@/lib/site";
 
 export const metadata = {
-  title: "Inventory",
-  description: "Browse current stock of used Japanese cars, trucks, buses, construction machinery, generators and agricultural tractors from Peshawar Trading Co., Ltd.",
+  title: "Showroom",
+  description: "Browse used Japanese cars ready for export: Toyota Land Cruiser Prado, Prius, Yaris Hybrid and Sienta Hybrid, with full photos and auction sheets.",
   alternates: { canonical: "/inventory" },
 };
 
 export default function InventoryPage() {
   return (
     <>
-      <section className="page-banner page-banner--photo">
-        <div className="page-banner__bg">
-          <SafeImage src={pexelsImg(9115461, 1600)} alt="" fill sizes="100vw" style={{ objectFit: "cover" }} />
-        </div>
+      <section className="page-head">
         <div className="container">
-          <span className="eyebrow">Our Stock</span>
-          <h1>Vehicle &amp; Machinery Inventory</h1>
-          <p className="breadcrumb"><a href="/">Home</a> / Inventory</p>
+          <p className="breadcrumb"><Link href="/">Home</Link> / Showroom</p>
+          <h1>The Showroom</h1>
+          <p>Every car below is in Japan and ready to export. Open any listing for the full photo set, specifications and inspection sheet.</p>
         </div>
       </section>
 
-      <section className="section">
+      <section className="section section--flush">
         <div className="container">
-          <Suspense fallback={null}>
-            <InventoryClient />
-          </Suspense>
+          <InventoryClient />
         </div>
       </section>
     </>

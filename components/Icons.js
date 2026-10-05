@@ -205,3 +205,95 @@ export const VEHICLE_ICONS = {
     </svg>
   ),
 };
+
+const stroke = { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.6, strokeLinecap: "round", strokeLinejoin: "round" };
+
+export function SpeedIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M4.5 18a8.5 8.5 0 1 1 15 0" />
+      <path d="m12 14 4-5" />
+      <circle cx="12" cy="14.5" r="1" />
+    </svg>
+  );
+}
+
+export function FuelIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M5 21V5a2 2 0 0 1 2-2h5a2 2 0 0 1 2 2v16M3.5 21h12" />
+      <path d="M14 9h2.5a1.5 1.5 0 0 1 1.5 1.5V16a1.5 1.5 0 0 0 3 0V8l-3-3" />
+      <path d="M7.5 7h4" />
+    </svg>
+  );
+}
+
+export function GearIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <circle cx="12" cy="12" r="3" />
+      <path d="M12 3v2.5M12 18.5V21M3 12h2.5M18.5 12H21M5.6 5.6l1.8 1.8M16.6 16.6l1.8 1.8M18.4 5.6l-1.8 1.8M7.4 16.6l-1.8 1.8" />
+    </svg>
+  );
+}
+
+export function SeatIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M8 3.5c-1 0-1.8.9-1.6 1.9L8 15h8l1.5-3.5H21" />
+      <path d="M8 15v3.5M16 15v3.5M6 18.5h12" />
+    </svg>
+  );
+}
+
+export function CalendarIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <rect x="3.5" y="5" width="17" height="15.5" rx="2" />
+      <path d="M3.5 10h17M8 3v4M16 3v4" />
+    </svg>
+  );
+}
+
+export function FileIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" />
+      <path d="M14 3v5h5M9 13h6M9 17h4" />
+    </svg>
+  );
+}
+
+export function ShipIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <path d="M3 17.5 5 12h14l2 5.5c-1.3 1.7-3 2-4.5 1.2-1.5.8-3 .8-4.5 0-1.5.8-3 .8-4.5 0C6 19.5 4.300 19.200 3 17.500Z" />
+      <path d="M12 12V5.500M9 8.500h6M7 12V9.500h10V12" />
+    </svg>
+  );
+}
+
+export function CloseIcon(props) {
+  return (
+    <svg {...stroke} strokeWidth="2" {...props}>
+      <path d="M6 6l12 12M18 6 6 18" />
+    </svg>
+  );
+}
+
+export function ChevronIcon(props) {
+  return (
+    <svg {...stroke} strokeWidth="2" {...props}>
+      <path d="m9 5 7 7-7 7" />
+    </svg>
+  );
+}
+
+export function KeyIcon(props) {
+  return (
+    <svg {...stroke} {...props}>
+      <circle cx="8" cy="15" r="4" />
+      <path d="m11 12 8.500-8.500M16 7l3 3M14 9l2 2" />
+    </svg>
+  );
+}

@@ -1,79 +1,73 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { useMemo, useState } from "react";
 import VehicleCard from "@/components/VehicleCard";
 import { SearchIcon } from "@/components/Icons";
-import { CATEGORY_LABELS, whatsappLink } from "@/lib/site";
-import { VEHICLES } from "@/lib/vehicles";
+import { VEHICLES, VEHICLE_TYPES } from "@/lib/vehicles";
+import { whatsappLink } from "@/lib/site";
 
-const CHIPS = Object.keys(CATEGORY_LABELS);
+const SORTS = {
+  newest: ["Newest first", (a, b) => b.year - a.year],
+  lowkm: ["Lowest mileage", (a, b) => (a.mileageKm ?? Infinity) - (b.mileageKm ?? Infinity)],
+  name: ["Name A–Z", (a, b) => a.title.localeCompare(b.title)],
+};
 
 export default function InventoryClient() {
-  const searchParams = useSearchParams();
-  const initialCat = searchParams.get("cat") || "all";
-  const [category, setCategory] = useState(CHIPS.includes(initialCat) ? initialCat : "all");
+  const [type, setType] = useState("All");
   const [query, setQuery] = useState("");
+  const [sort, setSort] = useState("newest");
 
-  useEffect(() => {
-    const cat = searchParams.get("cat");
-    if (cat && CHIPS.includes(cat)) setCategory(cat);
-  }, [searchParams]);
-
-  const filtered = useMemo(() => {
+  const list = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return VEHICLES.filter((v) => {
-      const matchCat = category === "all" || v.category === category;
-      const matchQuery = !q || v.title.toLowerCase().includes(q);
-      return matchCat && matchQuery;
-    });
-  }, [category, query]);
+    return VEHICLES.filter(
+      (v) => (type === "All" || v.type === type) && (!q || `${v.title} ${v.fuel} ${v.color} ${v.year}`.toLowerCase().includes(q))
+    ).sort(SORTS[sort][1]);
+  }, [type, query, sort]);
 
   return (
     <>
-      <div className="filter-bar">
-        <div className="filter-chips">
-          {CHIPS.map((key) => (
-            <button
-              key={key}
-              type="button"
-              className={`filter-chip${category === key ? " active" : ""}`}
-              onClick={() => setCategory(key)}
-            >
-              {CATEGORY_LABELS[key]}
+      <div className="filters">
+        <div className="chips" role="group" aria-label="Filter by body type">
+          {VEHICLE_TYPES.map((t) => (
+            <button key={t} type="button" className={`chip${type === t ? " is-active" : ""}`} onClick={() => setType(t)}>
+              {t}
             </button>
           ))}
         </div>
-        <div className="search-box">
-          <SearchIcon width={16} height={16} />
-          <input
-            type="text"
-            placeholder="Search by make or model..."
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-          />
+        <div className="filters__right">
+          <label className="search">
+            <SearchIcon width={17} height={17} />
+            <input type="search" placeholder="Search make, model, colour…" value={query} onChange={(e) => setQuery(e.target.value)} aria-label="Search cars" />
+          </label>
+          <select className="select" value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort cars">
+            {Object.entries(SORTS).map(([k, [label]]) => (
+              <option key={k} value={k}>
+                {label}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
-      {filtered.length ? (
-        <div className="veh-grid">
-          {filtered.map((v) => (
-            <VehicleCard key={v.id} vehicle={v} />
+      <p className="results-count">
+        {list.length} {list.length === 1 ? "car" : "cars"} available
+      </p>
+
+      {list.length ? (
+        <div className="grid grid--cars">
+          {list.map((v, i) => (
+            <VehicleCard key={v.id} vehicle={v} priority={i < 3} />
           ))}
         </div>
       ) : (
-        <div className="results-empty">
-          <SearchIcon width={48} height={48} />
-          <p>No matching vehicles right now. Message us on WhatsApp &mdash; we likely have it in our full stock list.</p>
+        <div className="empty">
+          <SearchIcon width={44} height={44} />
+          <p>No cars match that search. Tell us what you want and we&apos;ll source it from the Japanese auctions.</p>
+          <a className="btn btn--gold" target="_blank" rel="noopener" href={whatsappLink("Hello Peshawar Trading Co., I'm looking for a specific car. Can you source it?")}>
+            Request a car
+          </a>
         </div>
       )}
-
-      <div className="inventory-note">
-        <p>Our stock changes frequently and not everything is listed online yet. Tell us what you&apos;re looking for and we&apos;ll check our full yard &amp; auction access for you.</p>
-        <a className="btn btn--whatsapp" target="_blank" rel="noopener" href={whatsappLink("Hello Peshawar Trading Co., I couldn't find what I need on your website. Here's what I'm looking for:")}>
-          Ask About a Vehicle
-        </a>
-      </div>
     </>
   );
 }
